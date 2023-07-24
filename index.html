@@ -1,15 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <title>Safari AR Quick Look Viewer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        .ar-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div>
-    <a rel="ar" href="1.usdz">
-        <img src="1.jpg">
-    </a>
-</div>
+    <h1>AR Quick Look Viewer</h1>
+    <div class="ar-button" onclick="viewInAR()">View in AR</div>
+
+    <script>
+        function viewInAR() {
+            if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+                const usdzFile = '1.usdz'; // Replace with the path to your USDZ model
+                const anchor = document.createElement('a');
+                anchor.setAttribute('href', usdzFile);
+                anchor.setAttribute('rel', 'ar');
+                anchor.appendChild(document.createElement('img')); // Optional: add an AR button image
+                anchor.click();
+            } else {
+                alert('AR Quick Look is only available on iOS devices.');
+            }
+        }
+    </script>
 </body>
 </html>
