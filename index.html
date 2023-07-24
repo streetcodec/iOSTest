@@ -1,38 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Scale 3D Model</title>
+    <title>AR Quick Look Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            margin: 0;
-            overflow: hidden;
+            font-family: Arial, sans-serif;
+            text-align: center;
         }
 
-        #model-container {
-            position: relative;
-            width: 500px;
-            height: 500px;
-            /* Replace 'your_model_url' with the URL to your GLB model */
-            background-image: url('your_model_url');
-            background-size: cover;
+        h1 {
+            margin-top: 20px;
+        }
+
+        .ar-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div id="model-container"></div>
-    <button onclick="scaleModel(2)">Scale Up</button>
-    <button onclick="scaleModel(0.5)">Scale Down</button>
+    <h1>AR Quick Look Viewer</h1>
+    <div class="ar-button" onclick="viewInAR()">View in AR</div>
 
     <script>
-        function scaleModel(scaleFactor) {
-            const modelContainer = document.getElementById('model-container');
-            const currentScale = parseFloat(modelContainer.style.transform.match(/scale\(([^)]+)\)/)[1]);
-            const newScale = currentScale * scaleFactor;
-            modelContainer.style.transform = `scale(${newScale})`;
+        let scale = 1.0;
+
+        function viewInAR() {
+            if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+                const usdzFile = '1.usdz'; // Replace with the filename of your .usdz model
+                const anchor = document.createElement('a');
+                anchor.setAttribute('href', usdzFile);
+                anchor.setAttribute('rel', 'ar');
+                anchor.innerText = 'View in AR';
+                document.body.appendChild(anchor);
+                anchor.click();
+                document.body.removeChild(anchor);
+            } else {
+                alert('AR Quick Look is only available on iOS devices.');
+            }
+        }
+
+        function increaseScale() {
+            scale += 0.1;
+            updateScale();
+        }
+
+        function decreaseScale() {
+            scale -= 0.1;
+            if (scale < 0.1) {
+                scale = 0.1;
+            }
+            updateScale();
+        }
+
+        function updateScale() {
+            const arButton = document.querySelector('.ar-button');
+            arButton.style.transform = `scale(${scale})`;
         }
     </script>
+    <button onclick="increaseScale()">Increase Scale</button>
+    <button onclick="decreaseScale()">Decrease Scale</button>
 </body>
 </html>
+
 
 <!-- <!DOCTYPE html>
 <html>
