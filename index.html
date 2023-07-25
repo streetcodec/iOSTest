@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Scale 3D Model</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #model-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background-image: url('1.glb');
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
-    <div>
-    <a rel="ar" href="1.glb">
-        <img src="1.jpg">
-    </a>
-</div>
+    <div id="model-container"></div>
+    <button onclick="scaleModel(2)">Scale Up</button>
+    <button onclick="scaleModel(0.5)">Scale Down</button>
+
+    <script>
+        function scaleModel(scaleFactor) 
+        {
+            const modelContainer = document.getElementById('model-container');
+            const currentScale = parseFloat(modelContainer.style.transform.match(/scale\(([^)]+)\)/)[1]);
+            const newScale = currentScale * scaleFactor;
+            modelContainer.style.transform = `scale(${newScale})`;
+        }
+    </script>
 </body>
 </html>
